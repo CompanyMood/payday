@@ -1,3 +1,5 @@
+require 'prawn/table'
+
 module Payday
   # The PDF renderer. We use this internally in Payday to render pdfs, but really you should just need to call
   # {{Payday::Invoiceable#render_pdf}} to render pdfs yourself.
@@ -302,7 +304,7 @@ module Payday
     def self.number_to_currency(number, invoice)
       currency = Money::Currency.wrap(invoice_or_default(invoice, :currency))
       number *= currency.subunit_to_unit
-      number = number.round unless Money.infinite_precision
+      number = number.round unless Money.default_infinite_precision
       Money.new(number, currency).format
     end
 
